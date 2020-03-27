@@ -5,7 +5,7 @@ require 'thor/group'
 
 module Stealth
   module Generators
-    class Generate < Thor::Group
+    class GenerateFlow < Thor::Group
       include Thor::Actions
 
       argument :generator

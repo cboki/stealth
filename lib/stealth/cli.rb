@@ -5,7 +5,8 @@ require 'thor'
 require 'stealth/cli_base'
 require 'stealth/commands/console'
 require 'stealth/generators/builder'
-require 'stealth/generators/generate'
+require 'stealth/generators/generate_flow'
+require 'stealth/generators/generate_state'
 
 module Stealth
   class Cli < Thor
@@ -25,22 +26,22 @@ module Stealth
     desc 'generate', 'Generates scaffold Stealth files'
     long_desc <<-EOS
     `stealth generate <generator> <name>` generates scaffold Stealth files
-
     $ > stealth generate flow quote
     EOS
-    def generate(generator, name)
+    def generate(generator, name, flow_name = nil, type = nil)
       case generator
       when 'migration'
         Stealth::Migrations::Generator.migration(name)
       when 'flow'
-        Stealth::Generators::Generate.start([generator, name])
+        Stealth::Generators::GenerateFlow.start([generator, name])
+      when 'state'
+        Stealth::Generators::GenerateState.start([generator, name, flow_name, type])
       else
         puts "Could not find generator '#{generator}'."
         puts "Run `stealth help generate` for more options."
       end
     end
     map 'g' => 'generate'
-
 
     desc 'version', 'Prints stealth version'
     long_desc <<-EOS
