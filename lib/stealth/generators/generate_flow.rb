@@ -30,7 +30,7 @@ module Stealth
 
       def edit_flow_map
         inject_into_file "config/flow_map.rb", after: "include Stealth::Flow\n" do
-          "\n\tflow :#{name} do\n\t\tstate :ask_example\n\tend\n"
+          "\n  flow :#{name} do\n    state :ask_example\n  end\n"
         end
       end
 

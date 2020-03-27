@@ -19,20 +19,20 @@ module Stealth
 
       def edit_flow_map
         inject_into_file "config/flow_map.rb", after: "flow :#{flow_name} do\n" do
-          "\t\tstate :#{type}_#{flow_name}_#{name}_1\n"
+          "    state :#{type}_#{flow_name}_#{name}\n"
         end
       end
 
       def edit_controller
         inject_into_file "bot/controllers/#{flow_name.pluralize}_controller.rb",
         after: "BotController\n" do
-          "\n  def #{type}_#{flow_name}_#{name}_1\n    #{controller_method_content}\n  end\n"
+          "\n  def #{type}_#{flow_name}_#{name}\n    #{controller_method_content}\n  end\n"
         end
       end
 
       def create_replies
         if type == 'say' || type == 'ask'
-          template("replies/ask_example.tt", "bot/replies/#{flow_name.pluralize}/#{type}_#{flow_name}_#{name}_1.yml")
+          template("replies/ask_example.tt", "bot/replies/#{flow_name.pluralize}/#{type}_#{flow_name}_#{name}.yml")
         end
       end
 
